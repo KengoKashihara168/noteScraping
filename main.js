@@ -1,8 +1,19 @@
+// スプレッドシートのURL
+let spreadsheetURL = "https://docs.google.com/spreadsheets/d/12uaWZuVLM6RCZkD5aQ_k_UyXLImTn5fo_3RtkeJ6eF8/edit#gid=0";
+// スプレッドシート
+let spreadsheet = SpreadsheetApp.openByUrl(spreadsheetURL);
+// シート
+let sheet = spreadsheet.getSheetByName("ユーザー情報");
+// noteのユーザーID
+let userId = sheet.getRange("C2").getValue();
+// noteのパスワード
+let password = sheet.getRange("C3").getValue();
+
 function myFunction() {
   // let parser = getParser(url);
   // let param = getParameter(parser, "title");
 
-  let response = loginNote("KengoKashihara1998+comic@gmail.com", "Rakko3150K61")
+  let response = loginNote()
   console.log(response.getContentText());
 
   // ヘッダー情報の取得
@@ -13,9 +24,7 @@ function myFunction() {
 }
 
 // noteへログイン
-// <param name="id">ID（メールアドレス）</param>
-// <param name="password">パスワード</param>
-function loginNote(id, password) {
+function loginNote() {
   let url = "https://note.com/api/v1/sessions/sign_in";
 
   // ログイン情報
@@ -23,7 +32,7 @@ function loginNote(id, password) {
     follow: null,
     likable_id: null,
     likables: null,
-    login: id,
+    login: userId,
     magazine_follow: null,
     password: password,
     redirect_path: "/sitesettings/stats",
