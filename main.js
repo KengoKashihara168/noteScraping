@@ -4,6 +4,9 @@ function myFunction() {
 
   let response = loginNote("KengoKashihara1998+comic@gmail.com", "Rakko3150K61")
   console.log(response.getContentText());
+
+  // ヘッダー情報の取得
+  var headers = getHeaders(response);
 }
 
 // noteへログイン
@@ -30,6 +33,15 @@ function loginNote(id, password) {
 
   let response = UrlFetchApp.fetch(url, post_option);
   return response;
+}
+
+// Cookiesからヘッダー情報の取得
+// <param name="id">HTTPリクエストのレスポンス</param >
+function getHeaders(response) {
+  var cookies = response.getHeaders()["Set-Cookie"];
+  var headers = { Cookie: cookies };
+
+  return headers;
 }
 
 // Parserオブジェクトの取得
