@@ -1,15 +1,40 @@
 function myFunction() {
-  let url = "https://www.google.com/";
-  let parser = getParser(url);
-  let param = getParameter(parser,"title")
+  // let parser = getParser(url);
+  // let param = getParameter(parser, "title");
 
-  console.log(param);
+  let response = loginNote("KengoKashihara1998+comic@gmail.com", "Rakko3150K61")
+  console.log(response.getContentText());
+}
+
+// noteへログイン
+// <param name="id">ID（メールアドレス）</param>
+// <param name="password">パスワード</param>
+function loginNote(id, password) {
+  let url = "https://note.com/api/v1/sessions/sign_in";
+
+  // ログイン情報
+  let payload = {
+    follow: null,
+    likable_id: null,
+    likables: null,
+    login: id,
+    magazine_follow: null,
+    password: password,
+    redirect_path: "/sitesettings/stats",
+  };
+
+  let post_option = {
+    "method": "post",
+    "payload": payload
+  };
+
+  let response = UrlFetchApp.fetch(url, post_option);
+  return response;
 }
 
 // Parserオブジェクトの取得
 // <param name="url">HTMLを取得するURL</param>
-function getParser(url)
-{
+function getParser(url) {
   let html = UrlFetchApp.fetch(url);
   let parser = Parser.data(html.getContentText());
   return parser;
@@ -18,8 +43,7 @@ function getParser(url)
 // HTMLの要素を取得
 // <param name="parser">Parserオブジェクト</param>
 // <param name="from">取得するタグ</param>
-function getParameter(parser, tag)
-{
+function getParameter(parser, tag) {
   let from = "<" + tag + ">";
   let to = "</" + tag + ">";
   let param = parser.from(from).to(to).build();
