@@ -6,7 +6,10 @@ function myFunction() {
   console.log(response.getContentText());
 
   // ヘッダー情報の取得
-  var headers = getHeaders(response);
+  let headers = getHeaders(response);
+  // ダッシュボード情報の取得
+  let dashboard = getDashboard(headers);
+  console.log(dashboard.getContentText());
 }
 
 // noteへログイン
@@ -36,12 +39,26 @@ function loginNote(id, password) {
 }
 
 // Cookiesからヘッダー情報の取得
-// <param name="id">HTTPリクエストのレスポンス</param >
+// <param name="response">HTTPリクエストのレスポンス</param >
 function getHeaders(response) {
   var cookies = response.getHeaders()["Set-Cookie"];
   var headers = { Cookie: cookies };
 
   return headers;
+}
+
+// ダッシュボードのページ情報を取得
+// <param name="headers">Cookiesから取得したヘッダー情報</param >
+function getDashboard(headers) {
+  url = "https://note.com/api/v1/stats/pv?filter=all&page=1&sort=pv";
+  var get_options = {
+    method: "get",
+    headers: headers,
+    followRedirects: true,
+  };
+  // ダッシュボードページを取得
+  response = UrlFetchApp.fetch(url, get_options);
+  return response;
 }
 
 // Parserオブジェクトの取得
