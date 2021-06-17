@@ -13,13 +13,14 @@ function myFunction() {
   // let parser = getParser(url);
   // let param = getParameter(parser, "title");
 
+  // noteへログイン
   let response = loginNote()
   console.log(response.getContentText());
 
   // ヘッダー情報の取得
   let headers = getHeaders(response);
   // ダッシュボード情報の取得
-  let dashboard = getDashboard(headers);
+  let dashboard = getDashboard(headers,2);
   console.log(dashboard.getContentText());
 }
 
@@ -58,9 +59,9 @@ function getHeaders(response) {
 
 // ダッシュボードのページ情報を取得
 // <param name="headers">Cookiesから取得したヘッダー情報</param >
-function getDashboard(headers) {
-  url = "https://note.com/api/v1/stats/pv?filter=all&page=1&sort=pv";
-  var get_options = {
+function getDashboard(headers,page) {
+  let url = "https://note.com/api/v1/stats/pv?filter=all&page="+page+"&sort=pv";
+  let get_options = {
     method: "get",
     headers: headers,
     followRedirects: true,
