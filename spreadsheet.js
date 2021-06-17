@@ -22,3 +22,17 @@ function getNotePassword() {
 
     return password;
 }
+
+// シートに値を記入
+function setSheet(value, sheetName, row, column = 0) {
+    // シート
+    let sheet = spreadsheet.getSheetByName(sheetName);
+    let range;
+    // 入力するセルの取得
+    if (column == 0) {
+        range = sheet.getRange(row);
+    } else {
+        range = sheet.getRange(row,column);
+    }
+    range.setValue(value);
+}
