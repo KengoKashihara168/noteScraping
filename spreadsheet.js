@@ -36,3 +36,28 @@ function setSheet(value, sheetName, row, column = 0) {
     }
     range.setValue(value);
 }
+
+// ユーザー情報のシートにクリエイター名を入力
+function setCreatorName(name) {
+    setSheet(name, "ユーザー情報", "C7");
+}
+
+// ユーザー情報のシートにnoteIDを入力
+function setNoteID(noteID) {
+    setSheet(noteID, "ユーザー情報", "C8");
+}
+
+// ユーザー情報のシートに投稿した記事数を入力
+function setNoteCount(count) {
+    setSheet(count, "ユーザー情報", "C9");
+}
+
+// ユーザー情報のシートに投稿した記事数を入力
+function setFollowingCount(count) {
+    setSheet(count, "ユーザー情報", "C10");
+}
+
+// ユーザー情報のシートに投稿した記事数を入力
+function setFollowerCount(count) {
+    setSheet(count, "ユーザー情報", "C11");
+}

@@ -1,6 +1,6 @@
 function myFunction() {
   // noteへログイン
-  let response = loginNote()
+  let response = loginNote();
   // console.log(response.getContentText());
 
   // ヘッダー情報の取得
@@ -10,9 +10,13 @@ function myFunction() {
   // console.log(dashboard.getContentText());
 
   let obj = ConvertJsonToObject(dashboard);
-  // console.log(obj["start_date_str"]);
+  console.log(obj);
 
-  setSheet(obj["start_date_str"],"ユーザー情報", "C7");
-  setSheet(obj["start_date_str"],"ユーザー情報", 9, 3);
+  let userData = ConvertJsonToObject(response);
+  setCreatorName(userData["nickname"]);
+  setNoteID(userData["urlname"]);
+  setNoteCount(userData["note_count"]);
+  setFollowingCount(userData["following_count"]);
+  setFollowerCount(userData["follower_count"]);
 
 }
