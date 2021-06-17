@@ -1,7 +1,9 @@
 function myFunction() {
   // noteへログイン
   let response = loginNote();
-  // console.log(response.getContentText());
+  let userData = ConvertJsonToObject(response);
+  // シートに書き込み
+  writeUserData(userData);
 
   // ヘッダー情報の取得
   let headers = getHeaders(response);
@@ -11,12 +13,4 @@ function myFunction() {
 
   let obj = ConvertJsonToObject(dashboard);
   console.log(obj);
-
-  let userData = ConvertJsonToObject(response);
-  setCreatorName(userData["nickname"]);
-  setNoteID(userData["urlname"]);
-  setNoteCount(userData["note_count"]);
-  setFollowingCount(userData["following_count"]);
-  setFollowerCount(userData["follower_count"]);
-
 }

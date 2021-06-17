@@ -24,6 +24,15 @@ function loginNote() {
     return response;
 }
 
+// ユーザー情報をシートに書き出す
+function writeUserData(userData) {
+    setCreatorName(userData["nickname"]);            // クリエイター名
+    setNoteID(userData["urlname"]);                  // noteID
+    setNoteCount(userData["note_count"]);            // 投稿した記事数
+    setFollowingCount(userData["following_count"]);  // フォロー数
+    setFollowerCount(userData["follower_count"]);    // フォロワー数
+}
+
 // Cookiesからヘッダー情報の取得
 // <param name="response">HTTPリクエストのレスポンス</param >
 function getHeaders(response) {
