@@ -7,7 +7,7 @@ let sheet = spreadsheet.getSheetByName("ユーザー情報");
 // noteのユーザーID
 let userId = sheet.getRange("C2").getValue();
 // noteのパスワード
-let password = sheet.getRange("C3").getValue();
+let password = sheet.getRange("C4").getValue();
 
 function myFunction() {
   // let parser = getParser(url);
