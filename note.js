@@ -1,3 +1,6 @@
+let userData;
+let headers;
+
 // noteへログイン
 function loginNote() {
     let url = "https://note.com/api/v1/sessions/sign_in";
@@ -20,12 +23,16 @@ function loginNote() {
         "payload": payload
     };
 
-    let response = UrlFetchApp.fetch(url, post_option);
-    return response;
+    // ログインリクエスト
+    let loginData = UrlFetchApp.fetch(url, post_option);
+    // ログイン情報のJSONをオブジェクトに変換
+    userData = ConvertJsonToObject(loginData);
+    // ログインを維持するためCookiesをヘッダーに保持
+    headers = getHeaders(loginData);
 }
 
 // ユーザー情報をシートに書き出す
-function writeUserData(userData) {
+function writeUserData() {
     setCreatorName(userData["nickname"]);            // クリエイター名
     setNoteID(userData["urlname"]);                  // noteID
     setNoteCount(userData["note_count"]);            // 投稿した記事数
@@ -34,7 +41,6 @@ function writeUserData(userData) {
 }
 
 // Cookiesからヘッダー情報の取得
-// <param name="response">HTTPリクエストのレスポンス</param >
 function getHeaders(response) {
     var cookies = response.getHeaders()["Set-Cookie"];
     var headers = { Cookie: cookies };
@@ -43,8 +49,7 @@ function getHeaders(response) {
 }
 
 // ダッシュボードのページ情報を取得
-// <param name="headers">Cookiesから取得したヘッダー情報</param >
-function getDashboard(headers, page) {
+function getDashboard(page) {
     let url = "https://note.com/api/v1/stats/pv?filter=all&page=" + page + "&sort=pv";
     let get_options = {
         method: "get",
@@ -53,5 +58,21 @@ function getDashboard(headers, page) {
     };
     // ダッシュボードページを取得
     response = UrlFetchApp.fetch(url, get_options);
-    return response;
+    let obj = ConvertJsonToObject(response);
+    return obj;
+}
+
+// 全記事のステータスを取得
+function getStats() {
+    let noteCount = userData["note_count"];
+    let stats = new Array();
+
+    // ダッシュボードの全ページから取得
+    for (let i = 1; noteCount > 0; i++){
+        let dashboard = getDashboard(i);
+        stats = stats.concat(dashboard["note_stats"]);
+        noteCount -= dashboard["note_stats"].length;
+    }
+
+    return stats;
 }

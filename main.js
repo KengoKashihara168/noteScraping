@@ -1,16 +1,12 @@
 function myFunction() {
   // noteへログイン
-  let response = loginNote();
-  let userData = ConvertJsonToObject(response);
+  loginNote();
+
   // シートに書き込み
-  writeUserData(userData);
+  writeUserData();
 
-  // ヘッダー情報の取得
-  let headers = getHeaders(response);
-  // ダッシュボード情報の取得
-  let dashboard = getDashboard(headers,2);
-  // console.log(dashboard.getContentText());
+  // 記事の情報を取得
+  let stats = getStats();
 
-  let obj = ConvertJsonToObject(dashboard);
-  console.log(obj);
+  console.log(stats);
 }
