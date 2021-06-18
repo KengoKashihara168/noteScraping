@@ -1,5 +1,14 @@
 let userData;
 let headers;
+let dateTime;
+
+// noteの初期化
+function noteInitialize() {
+    // noteにログインしてユーザーデータとCookiesを取得
+    let loginData = loginNote();
+    userData = ConvertJsonToObject(loginData);
+    headers = getHeaders(loginData);
+}
 
 // noteへログイン
 function loginNote() {
@@ -24,11 +33,7 @@ function loginNote() {
     };
 
     // ログインリクエスト
-    let loginData = UrlFetchApp.fetch(url, post_option);
-    // ログイン情報のJSONをオブジェクトに変換
-    userData = ConvertJsonToObject(loginData);
-    // ログインを維持するためCookiesをヘッダーに保持
-    headers = getHeaders(loginData);
+    return UrlFetchApp.fetch(url, post_option);
 }
 
 // ユーザー情報をシートに書き出す
@@ -57,9 +62,19 @@ function getDashboard(page) {
         followRedirects: true,
     };
     // ダッシュボードページを取得
-    response = UrlFetchApp.fetch(url, get_options);
-    let obj = ConvertJsonToObject(response);
-    return obj;
+    let response = UrlFetchApp.fetch(url, get_options);
+    let noteData = ConvertJsonToObject(response);
+    return noteData;
+}
+
+// 日付と時刻を取得
+function getLastCalculateAt() {
+    if (!dateTime) {
+        console.log("日付を取得");
+        let data = getDashboard(1);
+        setDateTime(data["last_calculate_at"]);
+    }
+    return dateTime;
 }
 
 // 全記事のステータスを取得
@@ -75,4 +90,11 @@ function getStats() {
     }
 
     return stats;
+}
+
+// 日付と時刻を保存
+function setDateTime(lastCalculateAt) {
+    if (dateTime != lastCalculateAt) {
+        dateTime = lastCalculateAt;
+    }
 }
