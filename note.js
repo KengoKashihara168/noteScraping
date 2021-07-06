@@ -84,6 +84,7 @@ function getStats() {
 
     // ダッシュボードの全ページから取得
     for (let i = 1; noteCount > 0; i++){
+        if (noteCount == 0) break;
         let dashboard = getDashboard(i);
         stats = stats.concat(dashboard["note_stats"]);
         noteCount -= dashboard["note_stats"].length;
