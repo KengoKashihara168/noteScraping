@@ -2,6 +2,9 @@ function myFunction() {
   // noteへログイン
   noteInitialize();
 
+  // ユーザデータの取得
+  let userData = getUserData();
+
   // シートに書き込み
   writeUserData();
 

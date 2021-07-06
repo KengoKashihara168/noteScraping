@@ -23,6 +23,15 @@ function getNotePassword() {
     return password;
 }
 
+// ユーザー情報をシートに書き出す
+function writeUserData() {
+    setCreatorName(userData["nickname"]);            // クリエイター名
+    setNoteID(userData["urlname"]);                  // noteID
+    setNoteCount(userData["note_count"]);            // 投稿した記事数
+    setFollowingCount(userData["following_count"]);  // フォロー数
+    setFollowerCount(userData["follower_count"]);    // フォロワー数
+}
+
 // シートに値を記入
 function setSheet(value, sheetName, row, column = 0) {
     // シート

@@ -36,13 +36,10 @@ function loginNote() {
     return UrlFetchApp.fetch(url, post_option);
 }
 
-// ユーザー情報をシートに書き出す
-function writeUserData() {
-    setCreatorName(userData["nickname"]);            // クリエイター名
-    setNoteID(userData["urlname"]);                  // noteID
-    setNoteCount(userData["note_count"]);            // 投稿した記事数
-    setFollowingCount(userData["following_count"]);  // フォロー数
-    setFollowerCount(userData["follower_count"]);    // フォロワー数
+// ユーザ情報を取得
+function getUserData() {
+    if (!userData) console.error("ユーザ情報が取得できませんでした");
+    return userData;
 }
 
 // Cookiesからヘッダー情報の取得
