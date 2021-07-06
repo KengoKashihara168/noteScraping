@@ -24,7 +24,7 @@ function getNotePassword() {
 }
 
 // ユーザー情報をシートに書き出す
-function writeUserData() {
+function writeUserData(userData) {
     setCreatorName(userData["nickname"]);            // クリエイター名
     setNoteID(userData["urlname"]);                  // noteID
     setNoteCount(userData["note_count"]);            // 投稿した記事数

@@ -6,7 +6,7 @@ function myFunction() {
   let userData = getUserData();
 
   // シートに書き込み
-  writeUserData();
+  writeUserData(userData);
 
   // 日付を取得
   console.log(getLastCalculateAt());
