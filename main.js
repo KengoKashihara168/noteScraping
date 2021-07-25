@@ -12,7 +12,15 @@ function myFunction() {
   console.log(getLastCalculateAt());
 
   // 記事の情報を取得
-  let stats = getStats();
+  let status = getStatus();
 
-  console.log(stats);
+  // 記事の情報をシートに追加
+  for (let i = 0; i < status.length; i++)
+  {
+    let articleData   = ExtractArticleData(status[i]);
+    let articleValues = ExtractArticleValues(status[i]);
+
+    insertDataSheet("記事一覧", articleData);
+    insertDataSheet("2021年07月更新記録", articleValues);
+  }
 }

@@ -75,7 +75,7 @@ function getLastCalculateAt() {
 }
 
 // 全記事のステータスを取得
-function getStats() {
+function getStatus() {
     let noteCount = userData["note_count"];
     let stats = new Array();
 
@@ -95,4 +95,48 @@ function setDateTime(lastCalculateAt) {
     if (dateTime != lastCalculateAt) {
         dateTime = lastCalculateAt;
     }
+}
+
+// 記事の情報をステータスから抽出
+function ExtractArticleData(status) {
+    let values = [
+        status["id"],
+        status["name"],
+        status["key"],
+        status["type"]
+    ];
+
+    // つぶやきはタイトルが無いため”つぶやき”と設定
+    if (values[1] == null && values[3] == "TalkNote") {
+        values[1] = "つぶやき";
+    }
+
+    return values;
+}
+
+// 記事の値をステータスから抽出
+function ExtractArticleValues(status) {
+    let values = [
+        status["id"],
+        status["read_count"],
+        status["like_count"],
+        status["comment_count"],
+        getToday()
+    ];
+
+    return values;
+}
+
+// 今日の日時を取得
+function getToday() {
+    let today   = new Date();
+    let year    = today.getFullYear();
+    let month   = today.getMonth() + 1;
+    let day     = today.getDate();
+    let hours   = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+    let format  = year + "/" + month + "/" + day + " " + hours + ":" + minutes + ":" + seconds;
+    
+    return format;
 }

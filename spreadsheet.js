@@ -70,3 +70,14 @@ function setFollowingCount(count) {
 function setFollowerCount(count) {
     setSheet(count, "ユーザー情報", "C11");
 }
+
+// シートにデータを挿入
+function insertDataSheet(sheetName,data) {
+    let sheet     = spreadsheet.getSheetByName(sheetName);
+    let insertRow = sheet.getLastRow() + 1;
+
+    for (let i = 0; i < sheet.getLastColumn(); i++){
+        let range = sheet.getRange(insertRow, i + 1);
+        range.setValue(data[i]);
+    }
+}
